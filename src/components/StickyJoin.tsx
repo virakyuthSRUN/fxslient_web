@@ -9,11 +9,6 @@ export default function StickyJoin() {
   const isMobile = useRef(false);
 
   useEffect(() => {
-    const mq = window.matchMedia("(max-width: 820px)");
-    const sync = () => { isMobile.current = mq.matches; recompute(); };
-    sync();
-    mq.addEventListener?.("change", sync);
-
     const hero = document.querySelector(".hero");
     const join = document.getElementById("join");
     if (!hero || !join) return;
@@ -22,6 +17,11 @@ export default function StickyJoin() {
       if (!isMobile.current) { setShow(false); return; }
       setShow(!heroVisible.current && !joinVisible.current);
     };
+
+    const mq = window.matchMedia("(max-width: 820px)");
+    const sync = () => { isMobile.current = mq.matches; recompute(); };
+    sync();
+    mq.addEventListener?.("change", sync);
 
     const io1 = new IntersectionObserver(
       (es) => { es.forEach((e) => { heroVisible.current = e.isIntersecting; }); recompute(); },
